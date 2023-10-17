@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import * as bcrypt from 'bcrypt'
 
 const userSchema = mongoose.Schema({
   username: {
@@ -28,8 +29,13 @@ const userSchema = mongoose.Schema({
   contact: {
     type: [String],
     required: true
-  },
-  timestamp: true
+  }
+}, { timestamps: true })
+
+userSchema.pre('save', async function (next) {
+  const saltRound = 10
+  this.password = await bcrypt.hashSync(this.password, saltRound)
+  next()
 })
 
 export const User = mongoose.model('User', userSchema)
