@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 
 import { connectToMongo } from './DB/config/db.config.js'
-import userRoutes from './user/user.routes.js'
+import userRoutes from './User/user.routes.js'
 
 const app = express()
 
