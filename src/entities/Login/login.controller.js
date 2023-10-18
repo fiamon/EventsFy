@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import * as bcrypt from 'bcrypt'
 
-import { findUser, generateToken } from './auth.service.js'
+import { findUser, generateToken } from './login.service.js'
 
 export async function login (req, res) {
   try {

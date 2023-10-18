@@ -4,7 +4,7 @@ import express from 'express'
 import { connectToMongo } from './DB/config/db.config.js'
 import userRoutes from './entities/User/user.routes.js'
 import eventRoutes from './entities/Event/event.routes.js'
-import authRoutes from './entities/Auth/auth.routes.js'
+import authRoutes from './entities/Login/login.routes.js'
 
 const app = express()
 
