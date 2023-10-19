@@ -1,4 +1,4 @@
-import { createEvent, findAllEvents, countNews } from './event.service.js'
+import { createEvent, findAllEvents, countNews, latestEvent } from './event.service.js'
 
 export async function createEventController (req, res) {
   try {
@@ -72,6 +72,29 @@ export async function findAllEventsController (req, res) {
         spaceImage: item.spaceImage,
         owner: item.owner.fullName
       }))
+    })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+}
+
+export async function lastEventsController (req, res) {
+  try {
+    const event = await latestEvent()
+    if (!event) return res.status(400).send({ message: 'There is no registered events' })
+
+    res.send({
+      event: {
+        id: event._id,
+        title: event.title,
+        description: event.description,
+        startsAt: event.startsAt,
+        endsAt: event.endsAt,
+        address: event.address,
+        maxPeople: event.maxPeople,
+        spaceImage: event.spaceImage,
+        owner: event.owner.fullName
+      }
     })
   } catch (error) {
     res.status(500).send({ message: error.message })
