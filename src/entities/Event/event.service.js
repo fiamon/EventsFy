@@ -9,3 +9,7 @@ export const countNews = async () => await Event.countDocuments()
 export const latestEvent = async () => await Event.findOne().sort({ _id: -1 }).populate('owner')
 
 export const findById = async (id) => await Event.findById({ _id: id }).populate('owner')
+
+export const findByTitle = async (title) => await Event.find({
+  title: { $regex: `${title || ''}`, $options: 'i' }
+}).sort({ _id: -1 }).populate('owner')
