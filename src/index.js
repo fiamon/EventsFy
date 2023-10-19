@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
 
-import { connectToMongo } from './DB/config/db.config.js'
+import { connectToMongo } from './db/config/db.config.js'
 import userRoutes from './entities/User/user.routes.js'
 import eventRoutes from './entities/Event/event.routes.js'
 import authRoutes from './entities/Login/login.routes.js'
