@@ -78,7 +78,7 @@ export async function findAllEventsController (req, res) {
   }
 }
 
-export async function lastEventsController (req, res) {
+export async function lastestEventController (req, res) {
   try {
     const event = await latestEvent()
     if (!event) return res.status(400).send({ message: 'There is no registered events' })
