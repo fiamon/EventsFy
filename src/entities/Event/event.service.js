@@ -7,3 +7,5 @@ export const findAllEvents = async (limit, offset) => await Event.find({}).popul
 export const countNews = async () => await Event.countDocuments()
 
 export const latestEvent = async () => await Event.findOne().sort({ _id: -1 }).populate('owner')
+
+export const findById = async (id) => await Event.findById({ _id: id }).populate('owner')
