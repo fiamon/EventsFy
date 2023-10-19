@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import { createUserController, findAllUsersController, findByIdController, editUser } from './user.controller.js'
-import { validateId } from './user.middleware.js'
+import { validateId } from '../../utils/validators/id.validators.js'
 
 const router = Router()
 
