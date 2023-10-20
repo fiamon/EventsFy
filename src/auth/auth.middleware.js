@@ -19,7 +19,7 @@ export async function authMiddleware (req, res, next) {
       const user = await findById(decode._id)
       if (!user || !user._id) return res.status(400).send({ message: 'Invalid Token!' })
 
-      req.userId = user._id
+      req.userId = decode._id
 
       return next()
     })
