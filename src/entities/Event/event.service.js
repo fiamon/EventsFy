@@ -13,3 +13,5 @@ export const findById = async (id) => await Event.findById({ _id: id }).populate
 export const findByTitle = async (title) => await Event.find({
   title: { $regex: `${title || ''}`, $options: 'i' }
 }).sort({ _id: -1 }).populate('owner')
+
+export const findEventsByUser = async (id) => await Event.find({ owner: id }).populate('owner').sort({ _id: -1 })

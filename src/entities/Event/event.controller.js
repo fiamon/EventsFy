@@ -1,4 +1,4 @@
-import { createEvent, findAllEvents, countNews, latestEvent, findById, findByTitle } from './event.service.js'
+import { createEvent, findAllEvents, countNews, latestEvent, findById, findByTitle, findEventsByUser } from './event.service.js'
 
 export async function createEventController (req, res) {
   try {
@@ -135,6 +135,30 @@ export async function searchByTitleController (req, res) {
 
     res.send({
       results: event.map(item => ({
+        id: item._id,
+        title: item.title,
+        description: item.description,
+        startsAt: item.startsAt,
+        endsAt: item.endsAt,
+        address: item.address,
+        maxPeople: item.maxPeople,
+        spaceImage: item.spaceImage,
+        owner: item.owner.fullName
+      }))
+    })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+}
+
+export async function byUserController (req, res) {
+  try {
+    const id = req.userId
+
+    const events = await findEventsByUser(id)
+
+    res.send({
+      results: events.map(item => ({
         id: item._id,
         title: item.title,
         description: item.description,
