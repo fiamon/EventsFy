@@ -1,4 +1,4 @@
-import { createEvent, findAllEvents, countEvents, latestEvent, findById, findByTitle, findEventsByUser, updateEventInfo, findOneById } from './event.service.js'
+import { createEvent, findAllEvents, countEvents, latestEvent, findById, findByTitle, findEventsByUser, updateEventInfo, findOneById, deleteEvent } from './event.service.js'
 
 export async function createEventController (req, res) {
   try {
@@ -190,6 +190,22 @@ export async function updateController (req, res) {
     await updateEventInfo(id, title, description, startsAt, endsAt)
 
     res.send({ message: 'Post successfully updated!' })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+}
+
+export async function deleteController (req, res) {
+  try {
+    const { id } = req.params
+    const eventToBeDeleted = await findOneById(id)
+
+    // eslint-disable-next-line eqeqeq
+    if (eventToBeDeleted.owner._id != req.userId) return res.status(400).send({ message: 'You cant delete this event' })
+
+    await deleteEvent(id, { eventToBeDeleted })
+
+    res.status(200).send({ message: 'Event successfully deleted' })
   } catch (error) {
     res.status(500).send({ message: error.message })
   }

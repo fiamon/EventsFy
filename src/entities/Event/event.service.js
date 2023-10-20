@@ -19,3 +19,5 @@ export const findEventsByUser = async (id) => await Event.find({ owner: id }).po
 export const updateEventInfo = async (id, ...data) => await Event.findOneAndUpdate({ _id: id }, { data }, { rowResult: true })
 
 export const findOneById = async (id) => await Event.findById({ _id: id })
+
+export const deleteEvent = async (id) => await Event.findOneAndDelete(id)
