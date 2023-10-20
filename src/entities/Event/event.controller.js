@@ -1,4 +1,4 @@
-import { createEvent, findAllEvents, countNews, latestEvent, findById, findByTitle, findEventsByUser } from './event.service.js'
+import { createEvent, findAllEvents, countEvents, latestEvent, findById, findByTitle, findEventsByUser } from './event.service.js'
 
 export async function createEventController (req, res) {
   try {
@@ -45,7 +45,7 @@ export async function findAllEventsController (req, res) {
     const events = await findAllEvents(limit, offset)
     if (events.length === 0) return res.status(404).send({ message: 'There are no registered events' })
 
-    const total = await countNews()
+    const total = await countEvents()
     const currentUrl = req.baseUrl
 
     const next = offset + limit
