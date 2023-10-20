@@ -1,6 +1,15 @@
 import { Router } from 'express'
 
-import { createEventController, findAllEventsController, lastestEventController, findByIdController, searchByTitleController, byUserController, updateController, deleteController } from './event.controller.js'
+import {
+  createEventController,
+  findAllEventsController,
+  lastestEventController,
+  findByIdController,
+  searchByTitleController,
+  byUserController,
+  updateController,
+  deleteController
+} from './event.controller.js'
 import { authMiddleware } from '../../auth/auth.middleware.js'
 import { validateId } from '../../utils/validators/id.validators.js'
 

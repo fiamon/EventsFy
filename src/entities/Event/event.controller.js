@@ -1,4 +1,15 @@
-import { createEvent, findAllEvents, countEvents, latestEvent, findById, findByTitle, findEventsByUser, updateEventInfo, findOneById, deleteEvent } from './event.service.js'
+import {
+  createEvent,
+  findAllEvents,
+  countEvents,
+  latestEvent,
+  findById,
+  findByTitle,
+  findEventsByUser,
+  updateEventInfo,
+  findOneById,
+  deleteEvent
+} from './event.service.js'
 
 export async function createEventController (req, res) {
   try {
