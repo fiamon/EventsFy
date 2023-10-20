@@ -1,4 +1,4 @@
-import { createEvent, findAllEvents, countEvents, latestEvent, findById, findByTitle, findEventsByUser } from './event.service.js'
+import { createEvent, findAllEvents, countEvents, latestEvent, findById, findByTitle, findEventsByUser, updateEventInfo, findOneById } from './event.service.js'
 
 export async function createEventController (req, res) {
   try {
@@ -170,6 +170,26 @@ export async function byUserController (req, res) {
         owner: item.owner.fullName
       }))
     })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+}
+
+export async function updateController (req, res) {
+  try {
+    const { title, description, startsAt, endsAt } = req.body
+    const { id } = req.params
+
+    if (!title && !description && !startsAt && !endsAt) return res.status(400).send({ message: 'Submit at least one field to update the event' })
+
+    const event = await findOneById(id)
+
+    // eslint-disable-next-line eqeqeq
+    if (event.owner._id != req.userId) return res.status(400).send({ message: 'You cant update this post' })
+
+    await updateEventInfo(id, title, description, startsAt, endsAt)
+
+    res.send({ message: 'Post successfully updated!' })
   } catch (error) {
     res.status(500).send({ message: error.message })
   }
