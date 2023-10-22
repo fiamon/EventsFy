@@ -8,7 +8,7 @@ export const countEvents = async () => await Event.countDocuments()
 
 export const latestEvent = async () => await Event.findOne().sort({ _id: -1 }).populate('owner')
 
-export const findById = async (id) => await Event.findById({ id }).populate('owner')
+export const findById = async (id) => await Event.findById({ _id: id }).populate('owner')
 
 export const findByTitle = async (title) => await Event.find({
   title: { $regex: `${title || ''}`, $options: 'i' }
@@ -16,9 +16,9 @@ export const findByTitle = async (title) => await Event.find({
 
 export const findEventsByUser = async (id) => await Event.find({ owner: id }).populate('owner').sort({ _id: -1 })
 
-export const updateEventInfo = async (id, ...data) => await Event.findOneAndUpdate({ _id: id }, { data }, { rowResult: true })
+export const updateEventInfo = async (id, title, description, startsAt, endsAt) => await Event.findOneAndUpdate({ _id: id }, { title, description, startsAt, endsAt }, { rowResult: true })
 
-export const findOneById = async (id) => await Event.findById({ _id: id })
+export const findOneById = async (id) => await Event.findOne({ _id: id })
 
 export const deleteEvent = async (id) => await Event.findOneAndDelete(id)
 

@@ -16,7 +16,7 @@ import {
 
 export async function createEventController (req, res) {
   try {
-    const { title, description, startsAt, endsAt, address, maxPeople, spaceImage, comments } = req.body
+    const { title, description, startsAt, endsAt, address, maxPeople, spaceImage, comments, susbscribedPeople } = req.body
     if (!title || !description || !startsAt || !endsAt || !address || !maxPeople || !spaceImage) return res.status(400).send({ message: 'Please fill in all fields to create an event' })
 
     const event = await createEvent({
@@ -25,6 +25,7 @@ export async function createEventController (req, res) {
       description,
       startsAt,
       endsAt,
+      susbscribedPeople,
       address,
       comments,
       maxPeople,
@@ -83,6 +84,7 @@ export async function findAllEventsController (req, res) {
         comments: item.comments,
         startsAt: item.startsAt,
         endsAt: item.endsAt,
+        susbscribedPeople: item.susbscribedPeople,
         address: item.address,
         maxPeople: item.maxPeople,
         spaceImage: item.spaceImage,
@@ -104,8 +106,10 @@ export async function lastestEventController (req, res) {
         id: event._id,
         title: event.title,
         description: event.description,
+        comments: event.comments,
         startsAt: event.startsAt,
         endsAt: event.endsAt,
+        susbscribedPeople: event.susbscribedPeople,
         address: event.address,
         maxPeople: event.maxPeople,
         spaceImage: event.spaceImage,
@@ -129,8 +133,10 @@ export async function findByIdController (req, res) {
         id: event._id,
         title: event.title,
         description: event.description,
+        comments: event.comments,
         startsAt: event.startsAt,
         endsAt: event.endsAt,
+        susbscribedPeople: event.susbscribedPeople,
         address: event.address,
         maxPeople: event.maxPeople,
         spaceImage: event.spaceImage,
@@ -154,8 +160,10 @@ export async function searchByTitleController (req, res) {
         id: item._id,
         title: item.title,
         description: item.description,
+        comments: item.comments,
         startsAt: item.startsAt,
         endsAt: item.endsAt,
+        susbscribedPeople: item.susbscribedPeople,
         address: item.address,
         maxPeople: item.maxPeople,
         spaceImage: item.spaceImage,
@@ -178,8 +186,10 @@ export async function byUserController (req, res) {
         id: item._id,
         title: item.title,
         description: item.description,
+        comments: item.comments,
         startsAt: item.startsAt,
         endsAt: item.endsAt,
+        susbscribedPeople: item.susbscribedPeople,
         address: item.address,
         maxPeople: item.maxPeople,
         spaceImage: item.spaceImage,
@@ -199,6 +209,7 @@ export async function updateController (req, res) {
     if (!title && !description && !startsAt && !endsAt) return res.status(400).send({ message: 'Submit at least one field to update the event' })
 
     const event = await findOneById(id)
+    if (!event) return res.status(404).send({ message: 'Event not found!' })
 
     // eslint-disable-next-line eqeqeq
     if (event.owner._id != req.userId) return res.status(400).send({ message: 'You cant update this post' })
