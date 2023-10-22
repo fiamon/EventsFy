@@ -8,12 +8,14 @@ import {
   findEventsByUser,
   updateEventInfo,
   findOneById,
-  deleteEvent
+  deleteEvent,
+  addComment,
+  removeComment
 } from './event.service.js'
 
 export async function createEventController (req, res) {
   try {
-    const { title, description, startsAt, endsAt, address, maxPeople, spaceImage } = req.body
+    const { title, description, startsAt, endsAt, address, maxPeople, spaceImage, comments } = req.body
     if (!title || !description || !startsAt || !endsAt || !address || !maxPeople || !spaceImage) return res.status(400).send({ message: 'Please fill in all fields to create an event' })
 
     const event = await createEvent({
@@ -23,6 +25,7 @@ export async function createEventController (req, res) {
       startsAt,
       endsAt,
       address,
+      comments,
       maxPeople,
       spaceImage
     })
@@ -76,6 +79,7 @@ export async function findAllEventsController (req, res) {
         id: item._id,
         title: item.title,
         description: item.description,
+        comments: item.comments,
         startsAt: item.startsAt,
         endsAt: item.endsAt,
         address: item.address,
@@ -217,6 +221,39 @@ export async function deleteController (req, res) {
     await deleteEvent(id, { eventToBeDeleted })
 
     res.status(200).send({ message: 'Event successfully deleted' })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+}
+
+export async function addCommentController (req, res) {
+  try {
+    const { id } = req.params
+    const userId = req.userId
+    const { comment } = req.body
+
+    if (!comment) return res.status(400).send({ message: 'Write a message to comment' })
+
+    await addComment(id, comment, userId)
+
+    res.send({ message: 'Comment successfully completed!' })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+}
+
+export async function removeCommentController (req, res) {
+  try {
+    const { eventId, commentId } = req.params
+    const userId = req.userId
+
+    const removedComment = await removeComment(eventId, commentId, userId)
+
+    const commentFinder = removedComment.comments.find(comment => comment.commentId === commentId)
+    if (!commentFinder) return res.status(404).send({ message: 'Comment not found!' })
+    if (commentFinder.user !== userId) return res.status(400).send({ message: 'You cant delete this comment' })
+
+    res.send({ message: 'Comment successfully removed!' })
   } catch (error) {
     res.status(500).send({ message: error.message })
   }

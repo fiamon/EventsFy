@@ -21,3 +21,11 @@ export const updateEventInfo = async (id, ...data) => await Event.findOneAndUpda
 export const findOneById = async (id) => await Event.findById({ _id: id })
 
 export const deleteEvent = async (id) => await Event.findOneAndDelete(id)
+
+export const addComment = async (id, comment, user) => {
+  const commentId = Math.floor(Date.now() * Math.random()).toString(36)
+
+  return await Event.findOneAndUpdate({ _id: id }, { $push: { comments: { commentId, user, comment, createdAt: new Date() } } })
+}
+
+export const removeComment = async (eventId, commentId, user) => await Event.findOneAndUpdate({ _id: eventId }, { $pull: { comments: { commentId, user } } })

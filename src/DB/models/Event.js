@@ -33,6 +33,10 @@ const eventSchema = mongoose.Schema({
   spaceImage: {
     type: String,
     required: true
+  },
+  comments: {
+    type: Array,
+    required: true
   }
 }, { timestamps: true })
 
