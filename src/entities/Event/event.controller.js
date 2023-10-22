@@ -273,6 +273,8 @@ export async function joinEventController (req, res) {
     })
     if (isUserAlreadySubscribed) return res.status(400).send({ message: 'You are alredy subscribed' })
 
+    if (event.susbscribedPeople.length >= event.maxPeople) return res.status(400).send({ message: 'the event is full' })
+
     await joinEvent(id, user)
     res.status(200).send({ message: 'Success' })
   } catch (error) {
