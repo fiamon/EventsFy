@@ -29,3 +29,5 @@ export const addComment = async (id, comment, user) => {
 }
 
 export const removeComment = async (eventId, commentId, user) => await Event.findOneAndUpdate({ _id: eventId }, { $pull: { comments: { commentId, user } } })
+
+export const joinEvent = async (id, user) => await Event.findOneAndUpdate({ _id: id }, { $push: { susbscribedPeople: { user } } })

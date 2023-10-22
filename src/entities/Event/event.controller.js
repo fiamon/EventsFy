@@ -10,7 +10,8 @@ import {
   findOneById,
   deleteEvent,
   addComment,
-  removeComment
+  removeComment,
+  joinEvent
 } from './event.service.js'
 
 export async function createEventController (req, res) {
@@ -254,6 +255,26 @@ export async function removeCommentController (req, res) {
     if (commentFinder.user !== userId) return res.status(400).send({ message: 'You cant delete this comment' })
 
     res.send({ message: 'Comment successfully removed!' })
+  } catch (error) {
+    res.status(500).send({ message: error.message })
+  }
+}
+
+export async function joinEventController (req, res) {
+  try {
+    const { id } = req.params
+    const user = req.userId
+
+    const event = await findOneById(id)
+    if (!event) return res.status(404).send({ message: 'event not found!' })
+
+    const isUserAlreadySubscribed = event.susbscribedPeople.find(e => {
+      return e.user === user
+    })
+    if (isUserAlreadySubscribed) return res.status(400).send({ message: 'You are alredy subscribed' })
+
+    await joinEvent(id, user)
+    res.status(200).send({ message: 'Success' })
   } catch (error) {
     res.status(500).send({ message: error.message })
   }

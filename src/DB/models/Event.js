@@ -30,6 +30,9 @@ const eventSchema = mongoose.Schema({
     type: Number,
     required: true
   },
+  susbscribedPeople: {
+    type: Array
+  },
   spaceImage: {
     type: String,
     required: true
