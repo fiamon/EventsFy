@@ -1,0 +1,754 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "API documentation",
+		"description": "In this documentation I will show you how to use the API end-points and also test all available routes. Make sure you are logged in, some endpoints require authorization.",
+		"contact": "juliogustavofi@gmail.com",
+		"license": {
+			"name": "MIT",
+			"url": "https: //opensource.org/license/mit/"
+		},
+		"version": "1.0.0"
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8080",
+			"description": "localhost"
+		}
+	],
+	"paths": {
+		"/user": {
+			"post": {
+				"summary": "Create a new user",
+				"description": "Route responsible for creating a new user",
+				"tags": [
+					"Users"
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/User"
+							},
+							"examples": {
+								"Users": {
+									"value": {
+										"username": "geloagachando3",
+										"email": "juliogustavofi@gmail.com",
+										"password": "1234567",
+										"fullName": "Julio ReiDa12",
+										"avatar": "https://imgur.com/UsEAvwh",
+										"contact": "[47999999999, 11999999999]"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"400": {
+						"description": "Not Found"
+					},
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schemma": {
+									"type": "object",
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user": {
+			"get": {
+				"summary": "Search all users",
+				"description": "Route responsible for fetching all users",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/User"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/{id}": {
+			"get": {
+				"summary": "Search user by id",
+				"description": "Route responsible for searching for user by id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"description": "User ID",
+						"required": true
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/{id}": {
+			"patch": {
+				"summary": "Update user by id",
+				"description": "Route responsible for editing the user by id",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"description": "User ID",
+						"required": true
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/User"
+							},
+							"examples": {
+								"Users": {
+									"value": {
+										"username": "renatohhz"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/login": {
+			"post": {
+				"summary": "Login",
+				"description": "Route responsible for logging in a registered user",
+				"tags": [
+					"Auth"
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/User"
+							},
+							"examples": {
+								"User": {
+									"value": {
+										"email": "juliogustavofi@gmail.com",
+										"password": "1234567"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/event": {
+			"post": {
+				"summary": "Create a new event",
+				"description": "Route responsible for creating a new event",
+				"tags": [
+					"Post"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Event"
+							},
+							"examples": {
+								"Post": {
+									"value": {
+										"owner": "",
+										"title": "Games na baia",
+										"description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+										"startsAt": "11/04/2026",
+										"endsAt": "11/05/2026",
+										"address": "Rua da coronel, 35",
+										"maxPeople": 323,
+										"spaceImage": "https://imgur.com/a/KdEwvbs"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schemma": {
+									"type": "object",
+									"$ref": "#/components/schemas/Event"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/event": {
+			"get": {
+				"summary": "Search all posts",
+				"description": "Route responsible for fetching all events",
+				"tags": [
+					"Post"
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "limit",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "offset",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Event"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/event/latest": {
+			"get": {
+				"summary": "Search for the latest event",
+				"description": "Route responsible for searching for the latest event",
+				"tags": [
+					"Post"
+				],
+				"responses": {
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schemma": {
+									"type": "object",
+									"$ref": "#/components/schemas/Event"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/event/search": {
+			"get": {
+				"summary": "Search events by title",
+				"description": "Route responsible for fetching the events that match the title sent via query params",
+				"tags": [
+					"Post"
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "title",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Event"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/event/ByUser": {
+			"get": {
+				"summary": "Search events by user id",
+				"description": "Route responsible for fetching events by user id",
+				"tags": [
+					"Post"
+				],
+				"responses": {
+					"400": {
+						"description": "Not Found"
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Event"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/event/join/{id}": {
+			"patch": {
+				"summary": "Join Event",
+				"description": "Route responsible for register user in event",
+				"tags": [
+					"Post"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"description": "Event ID",
+						"required": true
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/event/comment/{id}": {
+			"patch": {
+				"summary": "Comment on a post",
+				"description": "Route responsible for commenting on a post",
+				"tags": [
+					"Post"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"description": "User ID",
+						"required": true
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"examples": {
+								"Comment": {
+									"value": {
+										"message": "Comentário legal"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/event/comment/{eventId}/{commentId}": {
+			"patch": {
+				"summary": "remove the comment on a post",
+				"description": "Route responsible remove some comment on a post",
+				"tags": [
+					"Post"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "eventId",
+						"type": "string",
+						"description": "User ID",
+						"required": true
+					},
+					{
+						"in": "path",
+						"name": "commentId",
+						"type": "string",
+						"description": "Comment id",
+						"required": true
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"examples": {
+								"Comment": {
+									"value": {
+										"message": "Comentário legal"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		},
+		"/event/{id}": {
+			"patch": {
+				"summary": "Update a post",
+				"description": "Route responsible for updating a Post",
+				"tags": [
+					"Post"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"description": "Post ID",
+						"required": true
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Event"
+							},
+							"examples": {
+								"Post": {
+									"value": {
+										"title": "",
+										"description": "",
+										"endsAt": "11/07/2026"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schemma": {
+									"type": "object",
+									"$ref": "#/components/schemas/Event"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/event/{id}": {
+			"patch": {
+				"summary": "Search post by id",
+				"description": "Route responsible for fetching post by id",
+				"tags": [
+					"Post"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"description": "Post ID",
+						"required": true
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schemma": {
+									"type": "object",
+									"$ref": "#/components/schemas/Event"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/event/{id}": {
+			"delete": {
+				"summary": "Delete an event",
+				"description": "Route responsible for deleting an event",
+				"tags": [
+					"Post"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"description": "Post ID",
+						"required": true
+					}
+				],
+				"responses": {
+					"401": {
+						"description": "Unauthorized"
+					},
+					"400": {
+						"description": "Not Found"
+					},
+					"200": {
+						"description": "OK"
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"User": {
+				"type": "object",
+				"properties": {
+					"username": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"fullName": {
+						"type": "string"
+					},
+					"avatar": {
+						"type": "string"
+					},
+					"contact": {
+						"type": "array"
+					}
+				}
+			},
+			"Event": {
+				"type": "object",
+				"properties": {
+					"owner": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"startsAt": {
+						"type": "date"
+					},
+					"endsAt": {
+						"type": "date"
+					},
+					"address": {
+						"type": "string"
+					},
+					"maxPeople": {
+						"type": "number"
+					},
+					"susbscribedPeople": {
+						"type": "array"
+					},
+					"spaceImage": {
+						"type": "string"
+					},
+					"comments": {
+						"type": "array"
+					}
+				}
+			}
+		}
+	}
+}
