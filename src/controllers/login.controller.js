@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt'
 import {
   findUser,
   generateToken
-} from './login.service.js'
+} from '../services/login.service.js'
 
 export async function login (req, res) {
   try {

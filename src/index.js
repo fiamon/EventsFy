@@ -1,10 +1,10 @@
 import 'dotenv/config'
 import express from 'express'
 
-import { connectToMongo } from './db/config/db.config.js'
-import userRoutes from './entities/User/user.routes.js'
-import eventRoutes from './entities/Event/event.routes.js'
-import authRoutes from './entities/Login/login.routes.js'
+import { connectToMongo } from './database/db.config.js'
+import userRoutes from './routes/user.routes.js'
+import eventRoutes from './routes/event.routes.js'
+import loginRoutes from './routes/login.routes.js'
 
 const app = express()
 
@@ -12,10 +12,10 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.use('/event', eventRoutes)
-app.use('/auth', authRoutes)
+app.use('/auth', loginRoutes)
 app.use('/', userRoutes)
 
-app.listen(process.env.PORT || 8080, async () => {
-  await connectToMongo()
+app.listen(process.env.PORT || 8080, () => {
+  connectToMongo()
   console.log('server is running')
 })

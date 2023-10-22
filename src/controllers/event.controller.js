@@ -12,7 +12,7 @@ import {
   addComment,
   removeComment,
   joinEvent
-} from './event.service.js'
+} from '../services/event.service.js'
 
 export async function createEventController (req, res) {
   try {

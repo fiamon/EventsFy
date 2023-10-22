@@ -12,9 +12,9 @@ import {
   addCommentController,
   removeCommentController,
   joinEventController
-} from './event.controller.js'
-import { authMiddleware } from '../../auth/auth.middleware.js'
-import { validateId } from '../../utils/validators/id.validators.js'
+} from '../controllers/event.controller.js'
+import { authMiddleware } from '../middlewares/auth.middleware.js'
+import { validateId } from '../utils/validators/id.validator.js'
 
 const router = Router()
 

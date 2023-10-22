@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
-import { findById } from './auth.service.js'
+
+import { findById } from '../services/auth.service.js'
 
 export async function authMiddleware (req, res, next) {
   try {

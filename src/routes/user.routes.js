@@ -5,8 +5,8 @@ import {
   findAllUsersController,
   findByIdController,
   editUser
-} from './user.controller.js'
-import { validateId } from '../../utils/validators/id.validators.js'
+} from '../controllers/user.controller.js'
+import { validateId } from '../utils/validators/id.validator.js'
 
 const router = Router()
 

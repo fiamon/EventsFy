@@ -4,7 +4,7 @@ import {
   verifyUser,
   findById,
   updateUser
-} from './user.service.js'
+} from '../services/user.service.js'
 
 export async function createUserController (req, res) {
   try {
