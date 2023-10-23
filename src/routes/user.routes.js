@@ -6,7 +6,6 @@ import {
   findByIdController,
   updateUserController
 } from '../controllers/user.controller.js'
-
 import { authMiddleware } from '../middlewares/auth.middleware.js'
 import { validateId } from '../utils/validators/id.validator.js'
 

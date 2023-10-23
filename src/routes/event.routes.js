@@ -16,18 +16,20 @@ import {
 import { authMiddleware } from '../middlewares/auth.middleware.js'
 import { validateId } from '../utils/validators/id.validator.js'
 
-const router = Router()
+const eventRouter = Router()
 
-router.post('/', authMiddleware, createEventController)
-router.get('/', findAllEventsController)
-router.get('/latest', lastestEventController)
-router.get('/search', searchByTitleController)
-router.get('/ByUser', authMiddleware, byUserController)
-router.patch('/join/:id', authMiddleware, validateId, joinEventController)
-router.patch('/comment/:id', authMiddleware, validateId, addCommentController)
-router.patch('/comment/:eventId/:commentId', authMiddleware, removeCommentController)
-router.get('/:id', authMiddleware, validateId, findByIdController)
-router.patch('/:id', authMiddleware, validateId, updateController)
-router.delete('/:id', authMiddleware, validateId, deleteController)
+eventRouter.get('/', findAllEventsController)
+eventRouter.get('/latest', lastestEventController)
+eventRouter.get('/search', searchByTitleController)
 
-export default router
+eventRouter.post('/', authMiddleware, createEventController)
+eventRouter.get('/ByUser', authMiddleware, byUserController)
+
+eventRouter.get('/:id', authMiddleware, validateId, findByIdController)
+eventRouter.patch('/join/:id', authMiddleware, validateId, joinEventController)
+eventRouter.patch('/comment/:id', authMiddleware, validateId, addCommentController)
+eventRouter.patch('/comment/:eventId/:commentId', authMiddleware, removeCommentController)
+eventRouter.patch('/:id', authMiddleware, validateId, updateController)
+eventRouter.delete('/:id', authMiddleware, validateId, deleteController)
+
+export default eventRouter

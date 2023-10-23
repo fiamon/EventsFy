@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import swaggerUi from 'swagger-ui-express'
+
 import swaggerDocument from '../swagger.json' assert {type: 'json'}
 
-const router = Router()
+const swaggerRoutes = Router()
 
-router.use('/', swaggerUi.serve)
-router.get('/', swaggerUi.setup(swaggerDocument))
+swaggerRoutes.use('/', swaggerUi.serve)
+swaggerRoutes.get('/', swaggerUi.setup(swaggerDocument))
 
-export default router
+export default swaggerRoutes
