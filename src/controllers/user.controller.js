@@ -41,7 +41,7 @@ export async function updateUserController (req, res) {
   const userId = req.userId
 
   try {
-    const updatedUser = await updateUserService(body, userId)
+    const updatedUser = await updateUserService(userId, body)
     return res.send(updatedUser)
   } catch (error) {
     return res.status(500).send({ message: error.message })
