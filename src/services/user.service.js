@@ -36,11 +36,10 @@ export async function findUserByIdService (id) {
   return user
 }
 
-export async function updateUserService (body, userId) {
+export async function updateUserService (userId, body) {
   let { username, email, password, fullName, avatar, contact } = body
-  if (!username && !email && !password && !fullName && !avatar && !contact) throw new Error('Please fill in at least one field to change some info')
-
-  if (password) password = bcrypt.hashSync(password, 10)
+  console.log(body)
+  if (!username && !email && !password && !fullName && !contact) throw new Error('Please fill in at least one field to change some info')
 
   const user = await findByIdRepository(userId)
   if (!user) throw new Error('User not found!')
@@ -48,7 +47,18 @@ export async function updateUserService (body, userId) {
   // eslint-disable-next-line eqeqeq
   if (user._id != userId) throw new Error('You cant update this user!')
 
-  const updatedUser = await updateUserRepository(body, userId)
+  if (password) {
+    password = await bcrypt.hashSync(password, 10)
+  }
+
+  const updatedUser = await updateUserRepository(userId, {
+    username,
+    email,
+    password,
+    fullName,
+    avatar,
+    contact
+  })
 
   if (!updatedUser) throw new Error('An error occurred when trying to change the information. Try again later')
 
