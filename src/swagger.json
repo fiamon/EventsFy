@@ -17,7 +17,7 @@
 		}
 	],
 	"paths": {
-		"/user": {
+		"/user/register": {
 			"post": {
 				"summary": "Create a new user",
 				"description": "Route responsible for creating a new user",
@@ -63,7 +63,7 @@
 				}
 			}
 		},
-		"/user": {
+		"/user/all": {
 			"get": {
 				"summary": "Search all users",
 				"description": "Route responsible for fetching all users",
@@ -140,7 +140,7 @@
 				}
 			}
 		},
-		"/user/{id}": {
+		"/user/update/{id}": {
 			"patch": {
 				"summary": "Update user by id",
 				"description": "Route responsible for editing the user by id",
@@ -232,7 +232,7 @@
 				}
 			}
 		},
-		"/event": {
+		"/events/create": {
 			"post": {
 				"summary": "Create a new event",
 				"description": "Route responsible for creating a new event",
@@ -288,7 +288,7 @@
 				}
 			}
 		},
-		"/event": {
+		"/events/all": {
 			"get": {
 				"summary": "Search all posts",
 				"description": "Route responsible for fetching all events",
@@ -327,7 +327,7 @@
 				}
 			}
 		},
-		"/event/latest": {
+		"/events/latest": {
 			"get": {
 				"summary": "Search for the latest event",
 				"description": "Route responsible for searching for the latest event",
@@ -352,7 +352,7 @@
 				}
 			}
 		},
-		"/event/search": {
+		"/events/search": {
 			"get": {
 				"summary": "Search events by title",
 				"description": "Route responsible for fetching the events that match the title sent via query params",
@@ -387,7 +387,7 @@
 				}
 			}
 		},
-		"/event/ByUser": {
+		"/events/byUser": {
 			"get": {
 				"summary": "Search events by user id",
 				"description": "Route responsible for fetching events by user id",
@@ -417,7 +417,7 @@
 				}
 			}
 		},
-		"/event/join/{id}": {
+		"/events/join/{id}": {
 			"patch": {
 				"summary": "Join Event",
 				"description": "Route responsible for register user in event",
@@ -451,7 +451,7 @@
 				}
 			}
 		},
-		"/event/comment/{id}": {
+		"/events/comment/{id}": {
 			"patch": {
 				"summary": "Comment on a post",
 				"description": "Route responsible for commenting on a post",
@@ -552,7 +552,7 @@
 				}
 			}
 		},
-		"/event/{id}": {
+		"/events/update/{id}": {
 			"patch": {
 				"summary": "Update a post",
 				"description": "Route responsible for updating a Post",
@@ -612,7 +612,7 @@
 				}
 			}
 		},
-		"/event/{id}": {
+		"/events/{id}": {
 			"patch": {
 				"summary": "Search post by id",
 				"description": "Route responsible for fetching post by id",
@@ -654,7 +654,7 @@
 				}
 			}
 		},
-		"/event/{id}": {
+		"/events/delete/{id}": {
 			"delete": {
 				"summary": "Delete an event",
 				"description": "Route responsible for deleting an event",

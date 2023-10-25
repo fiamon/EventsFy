@@ -23,7 +23,7 @@ eventRouter.get('/latest', lastestEventController)
 eventRouter.get('/search', searchByTitleController)
 
 eventRouter.post('/create', authMiddleware, createEventController)
-eventRouter.get('/byuser', authMiddleware, byUserController)
+eventRouter.get('/byUser', authMiddleware, byUserController)
 
 eventRouter.get('/:id', authMiddleware, validateId, findByIdController)
 eventRouter.patch('/join/:id', authMiddleware, validateId, joinEventController)
