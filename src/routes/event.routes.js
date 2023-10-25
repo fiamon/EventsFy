@@ -1,35 +1,23 @@
 import { Router } from 'express'
 
-import {
-  createEventController,
-  findAllEventsController,
-  lastestEventController,
-  findByIdController,
-  searchByTitleController,
-  byUserController,
-  updateController,
-  deleteController,
-  addCommentController,
-  removeCommentController,
-  joinEventController
-} from '../controllers/event.controller.js'
+import eventController from '../controllers/event.controller.js'
 import { authMiddleware } from '../middlewares/auth.middleware.js'
 import { validateId } from '../utils/validators/id.validator.js'
 
 const eventRouter = Router()
 
-eventRouter.get('/all', findAllEventsController)
-eventRouter.get('/latest', lastestEventController)
-eventRouter.get('/search', searchByTitleController)
+eventRouter.get('/all', eventController.findAllEvents)
+eventRouter.get('/latest', eventController.findThelastestEvent)
+eventRouter.get('/search', eventController.searchEventByTitle)
 
-eventRouter.post('/create', authMiddleware, createEventController)
-eventRouter.get('/byUser', authMiddleware, byUserController)
+eventRouter.post('/create', authMiddleware, eventController.createEvent)
+eventRouter.get('/byUser', authMiddleware, eventController.findEventsCreatedbyUser)
 
-eventRouter.get('/:id', authMiddleware, validateId, findByIdController)
-eventRouter.patch('/join/:id', authMiddleware, validateId, joinEventController)
-eventRouter.patch('/comment/:id', authMiddleware, validateId, addCommentController)
-eventRouter.patch('/comment/:eventId/:commentId', authMiddleware, removeCommentController)
-eventRouter.patch('/update/:id', authMiddleware, validateId, updateController)
-eventRouter.delete('/delete/:id', authMiddleware, validateId, deleteController)
+eventRouter.get('/:id', authMiddleware, validateId, eventController.findEventById)
+eventRouter.patch('/join/:id', authMiddleware, validateId, eventController.joinEvent)
+eventRouter.patch('/comment/:id', authMiddleware, validateId, eventController.addComment)
+eventRouter.patch('/comment/:eventId/:commentId', authMiddleware, eventController.removeComment)
+eventRouter.patch('/update/:id', authMiddleware, validateId, eventController.updateEvent)
+eventRouter.delete('/delete/:id', authMiddleware, validateId, eventController.deleteEvent)
 
 export default eventRouter

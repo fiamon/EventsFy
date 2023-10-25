@@ -1,27 +1,13 @@
-import {
-  createEventRepository,
-  findAllEventsRepository,
-  countEventsRepository,
-  findTheLatestEventRepository,
-  findEventByIdRepository,
-  findEventByTitleRepository,
-  findEventsCreatedByUserRepository,
-  updateEventRepository,
-  deleteEventRepository,
-  commentOnAnEventRepository,
-  removeCommentRepository,
-  subscribeOnAnEventRepository
-} from '../repositories/event.repository.js'
+import eventRepository from '../repositories/event.repository.js'
 
-// trocar o nome dos IDS
-export async function createEventService (body, userId) {
+async function createEvent (body, userId) {
   const { title, description, startsAt, endsAt, address, maxPeople, spaceImage } = body
 
   if (!title || !description || !startsAt || !endsAt || !address || !maxPeople || !spaceImage) {
     throw new Error('Please fill in all fields to create an event')
   }
 
-  const event = await createEventRepository({
+  const event = await eventRepository.createEvent({
     owner: userId,
     title,
     description,
@@ -39,7 +25,7 @@ export async function createEventService (body, userId) {
   }
 }
 
-export async function findAllEventsService (limit, offset, currentUrl) {
+async function findAllEvents (limit, offset, currentUrl) {
   limit = Number(limit)
   offset = Number(offset)
 
@@ -51,8 +37,8 @@ export async function findAllEventsService (limit, offset, currentUrl) {
     offset = 0
   }
 
-  const events = await findAllEventsRepository(limit, offset)
-  const total = await countEventsRepository()
+  const events = await eventRepository.findAllEvents(limit, offset)
+  const total = await eventRepository.countEvents()
 
   if (events.length === 0) throw new Error('There are no registered events')
 
@@ -85,8 +71,8 @@ export async function findAllEventsService (limit, offset, currentUrl) {
   }
 }
 
-export async function lastestEventService () {
-  const event = await findTheLatestEventRepository()
+async function findThelastestEvent () {
+  const event = await eventRepository.findTheLatestEvent()
   if (!event) throw new Error('There is no registered events')
 
   return {
@@ -106,8 +92,8 @@ export async function lastestEventService () {
   }
 }
 
-export async function findByIdService (id) {
-  const event = await findEventByIdRepository(id)
+async function findById (id) {
+  const event = await eventRepository.findEventById(id)
   if (!event) throw new Error('Event not found!')
 
   return {
@@ -127,8 +113,8 @@ export async function findByIdService (id) {
   }
 }
 
-export async function searchByTitleService (title) {
-  const event = await findEventByTitleRepository(title)
+async function searchByTitle (title) {
+  const event = await eventRepository.findEventByTitle(title)
   if (!event.length === 0) throw new Error('There are no events with this title')
 
   return {
@@ -148,8 +134,8 @@ export async function searchByTitleService (title) {
   }
 }
 
-export async function findEventsCreatedbyUserService (userId) {
-  const events = await findEventsCreatedByUserRepository(userId)
+async function findEventsCreatedbyUser (userId) {
+  const events = await eventRepository.findEventsCreatedByUser(userId)
 
   return {
     results: events.map(item => ({
@@ -168,42 +154,42 @@ export async function findEventsCreatedbyUserService (userId) {
   }
 }
 
-export async function updateEventService (body, id, userId) {
+async function updateEvent (body, id, userId) {
   const { title, description, startsAt, endsAt } = body
   if (!title && !description && !startsAt && !endsAt) throw new Error('Submit at least one field to update the event')
 
-  const event = await findEventByIdRepository(id)
+  const event = await eventRepository.findEventById(id)
   if (!event) throw new Error('Event not found!')
 
   // eslint-disable-next-line eqeqeq
   if (event.owner._id != userId) throw new Error('You cant update this post')
 
-  await updateEventRepository(event, title, description, startsAt, endsAt)
+  await eventRepository.updateEvent(event, title, description, startsAt, endsAt)
 
   return { message: 'Post successfully updated!' }
 }
 
-export async function deleteEventService (id, userId) {
-  const eventToBeDeleted = await findEventByIdRepository(id)
+async function deleteEvent (id, userId) {
+  const eventToBeDeleted = await eventRepository.findEventById(id)
 
   // eslint-disable-next-line eqeqeq
   if (eventToBeDeleted.owner._id != userId) throw new Error('You cant delete this event')
 
-  await deleteEventRepository(id)
+  await eventRepository.deleteEvent(id)
 
   return { message: 'Event successfully deleted' }
 }
 
-export async function addCommentService (id, userId, comment) {
+async function addComment (id, userId, comment) {
   if (!comment) throw new Error('Write a message to comment')
 
-  await commentOnAnEventRepository(id, comment, userId)
+  await eventRepository.commentOnAnEvent(id, comment, userId)
 
   return { message: 'Comment successfully completed!' }
 }
 
-export async function removeCommentService (eventId, commentId, userId) {
-  const removedComment = await removeCommentRepository(eventId, commentId, userId)
+async function removeComment (eventId, commentId, userId) {
+  const removedComment = await eventRepository.removeComment(eventId, commentId, userId)
 
   const commentFinder = removedComment.comments.find(comment => comment.commentId === commentId)
   if (!commentFinder) throw new Error('Comment not found!')
@@ -212,8 +198,8 @@ export async function removeCommentService (eventId, commentId, userId) {
   return { message: 'Comment successfully removed!' }
 }
 
-export async function joinEventService (id, userId) {
-  const event = await findEventByIdRepository(id)
+async function joinEvent (id, userId) {
+  const event = await eventRepository.findEventById(id)
   if (!event) throw new Error('event not found!')
 
   const isUserAlreadySubscribed = event.susbscribedPeople.find(e => {
@@ -223,6 +209,20 @@ export async function joinEventService (id, userId) {
 
   if (event.susbscribedPeople.length >= event.maxPeople) throw new Error('the event is full')
 
-  await subscribeOnAnEventRepository(id, userId)
+  await eventRepository.subscribeOnAnEvent(id, userId)
   return { message: 'Success' }
+}
+
+export default {
+  createEvent,
+  findAllEvents,
+  findThelastestEvent,
+  findById,
+  searchByTitle,
+  findEventsCreatedbyUser,
+  updateEvent,
+  deleteEvent,
+  addComment,
+  removeComment,
+  joinEvent
 }

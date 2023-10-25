@@ -1,10 +1,10 @@
 import { Event } from '../models/Event.js'
 
-export async function createEventRepository (event) {
+async function createEvent (event) {
   return await Event.create(event)
 }
 
-export async function findAllEventsRepository (limit, offset) {
+async function findAllEvents (limit, offset) {
   return await Event
     .find({})
     .populate('owner')
@@ -13,24 +13,24 @@ export async function findAllEventsRepository (limit, offset) {
     .limit(limit)
 }
 
-export async function countEventsRepository () {
+async function countEvents () {
   return await Event.countDocuments()
 }
 
-export async function findTheLatestEventRepository () {
+async function findTheLatestEvent () {
   return await Event
     .findOne()
     .sort({ _id: -1 })
     .populate('owner')
 }
 
-export async function findEventByIdRepository (id) {
+async function findEventById (id) {
   return await Event
     .findById({ _id: id })
     .populate('owner')
 }
 
-export async function findEventByTitleRepository (title) {
+async function findEventByTitle (title) {
   return await Event
     .find({
       title: {
@@ -42,14 +42,14 @@ export async function findEventByTitleRepository (title) {
     .populate('owner')
 }
 
-export async function findEventsCreatedByUserRepository (id) {
+async function findEventsCreatedByUser (id) {
   return await Event
     .find({ owner: id })
     .populate('owner')
     .sort({ _id: -1 })
 }
 
-export async function updateEventRepository (event, title, description, startsAt, endsAt) {
+async function updateEvent (event, title, description, startsAt, endsAt) {
   return await Event
     .updateOne(
       event,
@@ -58,11 +58,11 @@ export async function updateEventRepository (event, title, description, startsAt
     )
 }
 
-export async function deleteEventRepository (id) {
+async function deleteEvent (id) {
   return await Event.findOneAndDelete(id)
 }
 
-export async function commentOnAnEventRepository (id, comment, user) {
+async function commentOnAnEvent (id, comment, user) {
   const commentId = Math.floor(Date.now() * Math.random()).toString(36)
 
   return await Event
@@ -72,7 +72,7 @@ export async function commentOnAnEventRepository (id, comment, user) {
     )
 }
 
-export async function removeCommentRepository (eventId, commentId, user) {
+async function removeComment (eventId, commentId, user) {
   return await Event
     .findOneAndUpdate(
       { _id: eventId },
@@ -80,10 +80,25 @@ export async function removeCommentRepository (eventId, commentId, user) {
     )
 }
 
-export async function subscribeOnAnEventRepository (id, user) {
+async function subscribeOnAnEvent (id, user) {
   return await Event
     .findOneAndUpdate(
       { _id: id },
       { $push: { susbscribedPeople: { user } } }
     )
+}
+
+export default {
+  createEvent,
+  findAllEvents,
+  countEvents,
+  findTheLatestEvent,
+  findEventById,
+  findEventByTitle,
+  findEventsCreatedByUser,
+  updateEvent,
+  deleteEvent,
+  commentOnAnEvent,
+  removeComment,
+  subscribeOnAnEvent
 }
