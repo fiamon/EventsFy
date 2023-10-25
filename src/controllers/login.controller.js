@@ -9,8 +9,8 @@ export async function loginController (req, res) {
     const token = await loginService(password, email)
 
     res.header('Authorization', `Bearer ${token}`)
-    res.send('Logged')
+    return res.send('Logged')
   } catch (error) {
-    res.status(500).send({ message: error.message })
+    return res.status(500).send({ message: error.message })
   }
 }

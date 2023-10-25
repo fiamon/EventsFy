@@ -6,8 +6,8 @@ export async function validateId (req, res, next) {
     if (!id) return res.status(404).send({ message: 'ID not found!' })
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).send({ message: 'this ID isnt valid' })
 
-    next()
+    return next()
   } catch (error) {
-    res.status(500).send({ message: error.message })
+    return res.status(500).send({ message: error.message })
   }
 }

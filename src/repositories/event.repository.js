@@ -1,7 +1,6 @@
 import { Event } from '../models/Event.js'
 
 export async function createEventRepository (event) {
-  console.log(event)
   return await Event.create(event)
 }
 
