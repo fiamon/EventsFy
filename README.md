@@ -8,7 +8,7 @@ npm intall
 
 npm run dev
 
-http://localhost:8080
+http://localhost:8080/doc
 
 ```
 📁 src
