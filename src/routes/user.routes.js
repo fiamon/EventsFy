@@ -11,9 +11,9 @@ import { validateId } from '../utils/validators/id.validator.js'
 
 const userRouter = Router()
 
-userRouter.post('/', createUserController)
-userRouter.get('/', findAllUsersController)
+userRouter.post('/register', createUserController)
+userRouter.get('/all', findAllUsersController)
 userRouter.get('/:id', validateId, findByIdController)
-userRouter.patch('/:id', authMiddleware, updateUserController)
+userRouter.patch('/update/:id', authMiddleware, updateUserController)
 
 export default userRouter

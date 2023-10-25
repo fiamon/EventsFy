@@ -18,18 +18,18 @@ import { validateId } from '../utils/validators/id.validator.js'
 
 const eventRouter = Router()
 
-eventRouter.get('/', findAllEventsController)
+eventRouter.get('/all', findAllEventsController)
 eventRouter.get('/latest', lastestEventController)
 eventRouter.get('/search', searchByTitleController)
 
-eventRouter.post('/', authMiddleware, createEventController)
-eventRouter.get('/ByUser', authMiddleware, byUserController)
+eventRouter.post('/create', authMiddleware, createEventController)
+eventRouter.get('/byuser', authMiddleware, byUserController)
 
 eventRouter.get('/:id', authMiddleware, validateId, findByIdController)
 eventRouter.patch('/join/:id', authMiddleware, validateId, joinEventController)
 eventRouter.patch('/comment/:id', authMiddleware, validateId, addCommentController)
 eventRouter.patch('/comment/:eventId/:commentId', authMiddleware, removeCommentController)
-eventRouter.patch('/:id', authMiddleware, validateId, updateController)
-eventRouter.delete('/:id', authMiddleware, validateId, deleteController)
+eventRouter.patch('/update/:id', authMiddleware, validateId, updateController)
+eventRouter.delete('/delete/:id', authMiddleware, validateId, deleteController)
 
 export default eventRouter

@@ -7,7 +7,7 @@ import swaggerRoutes from './swagger.routes.js'
 
 const router = Router()
 
-router.use('/event', eventRouter)
+router.use('/events', eventRouter)
 router.use('/login', loginRouter)
 router.use('/doc', swaggerRoutes)
 router.use('/user', userRouter)
