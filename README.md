@@ -1,5 +1,15 @@
 # folder structure 
 
+In this API, youre able to:
+
+Register, login (jwt), find users and events (pagination), find events created by an user, only logged users can modify their events, only logged users can delete their events, and much more. You can access the complete documentation with:
+
+npm intall
+
+npm run dev
+
+http://localhost:8080
+
 ```
 📁 src
   📂 controllers
