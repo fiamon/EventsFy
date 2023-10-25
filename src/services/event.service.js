@@ -7,7 +7,6 @@ import {
   findEventByTitleRepository,
   findEventsCreatedByUserRepository,
   updateEventRepository,
-  // findOneById, // Possivel erro
   deleteEventRepository,
   commentOnAnEventRepository,
   removeCommentRepository,

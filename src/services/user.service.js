@@ -38,7 +38,6 @@ export async function findUserByIdService (id) {
 
 export async function updateUserService (userId, body) {
   let { username, email, password, fullName, avatar, contact } = body
-  console.log(body)
   if (!username && !email && !password && !fullName && !contact) throw new Error('Please fill in at least one field to change some info')
 
   const user = await findByIdRepository(userId)
