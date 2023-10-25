@@ -2,7 +2,7 @@ import {
   loginService
 } from '../services/login.service.js'
 
-export async function login (req, res) {
+export async function loginController (req, res) {
   const { password, email } = req.body
 
   try {
