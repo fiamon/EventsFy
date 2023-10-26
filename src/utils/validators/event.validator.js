@@ -18,7 +18,7 @@ function updateEvent (data) {
     title: Joi.string().min(2).max(30).optional(),
     description: Joi.string().min(5).max(200).optional(),
     startsAt: Joi.date().min('now').optional(),
-    endsAt: Joi.date()
+    endsAt: Joi.date().optional()
   })
   return schema.validate(data)
 }
