@@ -710,7 +710,7 @@
 						"type": "string"
 					},
 					"contact": {
-						"type": "array"
+						"type": "Array"
 					}
 				}
 			},
@@ -739,13 +739,13 @@
 						"type": "number"
 					},
 					"susbscribedPeople": {
-						"type": "array"
+						"type": "Array"
 					},
 					"spaceImage": {
 						"type": "string"
 					},
 					"comments": {
-						"type": "array"
+						"type": "Array"
 					}
 				}
 			}
