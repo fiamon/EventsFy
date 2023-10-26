@@ -7,6 +7,8 @@ async function createEvent (body, userId) {
     throw new Error('Please fill in all fields to create an event')
   }
 
+  if (endsAt < startsAt) throw new Error('The end cannot be bigger than the start')
+
   const event = await eventRepository.createEvent({
     owner: userId,
     title,
