@@ -1,11 +1,14 @@
 import bcrypt from 'bcrypt'
 
 import userRepository from '../repositories/user.repository.js'
+import userValidator from '../utils/validators/user.validator.js'
 
 async function createUser (body) {
   const { username, email, password, fullName, avatar, contact } = body
-
   if (!username || !email || !password || !fullName || !contact || !avatar) throw new Error('Please fill in all fields to register')
+
+  const { error } = await userValidator.createUser(body)
+  if (error) throw new Error(error.message)
 
   const verifyEmail = await userRepository.emailExists({ email })
   if (verifyEmail) throw new Error('This email alredy exists')
