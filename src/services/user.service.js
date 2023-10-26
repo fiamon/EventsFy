@@ -37,6 +37,9 @@ async function updateUser (userId, body) {
   let { username, email, password, fullName, avatar, contact } = body
   if (!username && !email && !password && !fullName && !contact) throw new Error('Please fill in at least one field to change some info')
 
+  const { error } = await userValidator.updateUser(body)
+  if (error) throw new Error(error.message)
+
   const user = await userRepository.findById(userId)
   if (!user) throw new Error('User not found!')
 

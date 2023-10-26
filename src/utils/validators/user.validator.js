@@ -12,6 +12,18 @@ async function createUser (data) {
   return schema.validate(data)
 }
 
+async function updateUser (data) {
+  const schema = Joi.object({
+    username: Joi.string().required().min(2).max(20).optional(),
+    email: Joi.string().required().min(5).max(20).email({ minDomainSegments: 2 }).optional(),
+    password: Joi.string().required().min(6).max(20).optional(),
+    fullName: Joi.string().required().min(2).max(40).optional(),
+    avatar: Joi.string().optional(),
+    contact: Joi.array().items(Joi.string()).optional()
+  })
+  return schema.validate(data)
+}
+
 async function login (data) {
   const schema = Joi.object({
     email: Joi.string().required().min(5).max(20).email({ minDomainSegments: 2 }),
@@ -23,5 +35,6 @@ async function login (data) {
 
 export default {
   createUser,
-  login
+  login,
+  updateUser
 }
