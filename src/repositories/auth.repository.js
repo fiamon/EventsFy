@@ -1,5 +1,9 @@
 import { User } from '../models/User.js'
 
-export async function findByIdRepository (id) {
+async function findById (id) {
   return await User.findById({ _id: id })
+}
+
+export default {
+  findById
 }

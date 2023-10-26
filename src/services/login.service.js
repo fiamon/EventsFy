@@ -1,19 +1,20 @@
 import 'dotenv/config'
 import * as bcrypt from 'bcrypt'
 
-import {
-  findUserByEmailRepository,
-  generateTokenRepository
-} from '../repositories/login.repository.js'
+import loginRepository from '../repositories/login.repository.js'
 
-export async function loginService (password, email) {
+async function loginAndToken (password, email) {
   if (!password || !email) throw new Error('Please fill in all fields to login')
 
-  const user = await findUserByEmailRepository(email)
+  const user = await loginRepository.findUserByEmail(email)
   if (!user) throw new Error('Email or passoword isnt valid! Check you credentials.')
   if (!bcrypt.compareSync(password, user.password)) throw new Error('Email or passoword isnt valid! Check you credentials.')
 
-  const token = await generateTokenRepository(user._id)
+  const token = await loginRepository.generateToken(user._id)
 
   return token
+}
+
+export default {
+  loginAndToken
 }

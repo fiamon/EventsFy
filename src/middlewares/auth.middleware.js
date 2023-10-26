@@ -1,10 +1,10 @@
-import { authService } from '../services/auth.service.js'
+import authService from '../services/auth.service'
 
 export async function authMiddleware (req, res, next) {
   const { authorization } = req.headers
 
   try {
-    const userId = await authService(authorization)
+    const userId = await authService.auth(authorization)
     req.userId = userId
     return next()
   } catch (error) {

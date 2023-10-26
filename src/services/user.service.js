@@ -1,46 +1,40 @@
 import bcrypt from 'bcrypt'
 
-import {
-  createUserRepository,
-  emailExistsRepository,
-  findAllUsersRepository,
-  findByIdRepository,
-  updateUserRepository
-} from '../repositories/user.repository.js'
+import userRepository from '../repositories/user.repository.js'
 
-export async function createUserService (body) {
+async function createUser (body) {
   const { username, email, password, fullName, avatar, contact } = body
 
   if (!username || !email || !password || !fullName || !contact || !avatar) throw new Error('Please fill in all fields to register')
 
-  const verifyEmail = await emailExistsRepository({ email })
+  const verifyEmail = await userRepository.emailExists({ email })
   if (verifyEmail) throw new Error('This email alredy exists')
 
-  const user = await createUserRepository(body)
+  const user = await userRepository.createUser(body)
   if (!user) throw new Error('Error creating user')
 
   return { message: 'User successfully created' }
 }
 
-export async function findAllUsersService () {
-  const users = await findAllUsersRepository()
+async function findAllUsers () {
+  const users = await userRepository.findAllUsers()
   if (users.length === 0) throw new Error('There are no registered users')
 
   return users
 }
 
-export async function findUserByIdService (id) {
-  const user = await findByIdRepository(id)
+async function findUserById (id) {
+  const user = await userRepository.findById(id)
   if (!user) throw new Error('User not found')
 
   return user
 }
 
-export async function updateUserService (userId, body) {
+async function updateUser (userId, body) {
   let { username, email, password, fullName, avatar, contact } = body
   if (!username && !email && !password && !fullName && !contact) throw new Error('Please fill in at least one field to change some info')
 
-  const user = await findByIdRepository(userId)
+  const user = await userRepository.findById(userId)
   if (!user) throw new Error('User not found!')
 
   // eslint-disable-next-line eqeqeq
@@ -50,7 +44,7 @@ export async function updateUserService (userId, body) {
     password = await bcrypt.hashSync(password, 10)
   }
 
-  const updatedUser = await updateUserRepository(userId, {
+  const updatedUser = await userRepository.updateUser(userId, {
     username,
     email,
     password,
@@ -62,4 +56,11 @@ export async function updateUserService (userId, body) {
   if (!updatedUser) throw new Error('An error occurred when trying to change the information. Try again later')
 
   return { message: 'User successfully updated' }
+}
+
+export default {
+  createUser,
+  findAllUsers,
+  findUserById,
+  updateUser
 }

@@ -1,21 +1,29 @@
 import { User } from '../models/User.js'
 
-export async function createUserRepository (user) {
+async function createUser (user) {
   return await User.create(user)
 }
 
-export async function findAllUsersRepository () {
+async function findAllUsers () {
   return await User.find({})
 }
 
-export async function findByIdRepository (id) {
+async function findById (id) {
   return User.findById({ _id: id })
 }
 
-export async function updateUserRepository (userId, body) {
+async function updateUser (userId, body) {
   return await User.findByIdAndUpdate({ _id: userId }, body)
 }
 
-export async function emailExistsRepository (email) {
+async function emailExists (email) {
   return await User.exists(email)
+}
+
+export default {
+  createUser,
+  findAllUsers,
+  findById,
+  updateUser,
+  emailExists
 }
