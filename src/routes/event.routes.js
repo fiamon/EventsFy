@@ -6,7 +6,7 @@ import { validateId } from '../utils/validators/id.validator.js'
 
 const eventRouter = Router()
 
-eventRouter.get('/all', eventController.findAllEvents)
+eventRouter.get('/', eventController.findAllEvents)
 eventRouter.get('/latest', eventController.findThelastestEvent)
 eventRouter.get('/search', eventController.searchEventByTitle)
 

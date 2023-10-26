@@ -17,7 +17,7 @@
 		}
 	],
 	"paths": {
-		"/user/register": {
+		"/users/register": {
 			"post": {
 				"summary": "Create a new user",
 				"description": "Route responsible for creating a new user",
@@ -63,7 +63,7 @@
 				}
 			}
 		},
-		"/user/all": {
+		"/users": {
 			"get": {
 				"summary": "Search all users",
 				"description": "Route responsible for fetching all users",
@@ -98,7 +98,7 @@
 				}
 			}
 		},
-		"/user/{id}": {
+		"/users/{id}": {
 			"get": {
 				"summary": "Search user by id",
 				"description": "Route responsible for searching for user by id",
@@ -140,7 +140,7 @@
 				}
 			}
 		},
-		"/user/update/{id}": {
+		"/users/update/{id}": {
 			"patch": {
 				"summary": "Update user by id",
 				"description": "Route responsible for editing the user by id",
@@ -288,7 +288,7 @@
 				}
 			}
 		},
-		"/events/all": {
+		"/events": {
 			"get": {
 				"summary": "Search all posts",
 				"description": "Route responsible for fetching all events",
