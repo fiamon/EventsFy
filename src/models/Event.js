@@ -34,7 +34,7 @@ const eventSchema = mongoose.Schema({
     type: Array,
     required: true
   },
-  spaceImage: {
+  imageOfThePlace: {
     type: String,
     required: true
   },

@@ -1,11 +1,15 @@
 import eventRepository from '../repositories/event.repository.js'
+import eventValidator from '../utils/validators/event.validator.js'
 
 async function createEvent (body, userId) {
-  const { title, description, startsAt, endsAt, address, maxPeople, spaceImage } = body
+  const { title, description, startsAt, endsAt, address, maxPeople, imageOfThePlace } = body
 
-  if (!title || !description || !startsAt || !endsAt || !address || !maxPeople || !spaceImage) {
+  if (!title || !description || !startsAt || !endsAt || !address || !maxPeople || !imageOfThePlace) {
     throw new Error('Please fill in all fields to create an event')
   }
+
+  const { error } = await eventValidator.createEvent(body)
+  if (error) throw new Error(error.message)
 
   if (endsAt < startsAt) throw new Error('The end cannot be bigger than the start')
 
@@ -17,7 +21,7 @@ async function createEvent (body, userId) {
     endsAt,
     address,
     maxPeople,
-    spaceImage
+    imageOfThePlace
   })
   if (!event) throw new Error('An error occurred while creating the event. Try again later')
 
@@ -67,7 +71,7 @@ async function findAllEvents (limit, offset, currentUrl) {
       susbscribedPeople: item.susbscribedPeople,
       address: item.address,
       maxPeople: item.maxPeople,
-      spaceImage: item.spaceImage,
+      imageOfThePlace: item.imageOfThePlace,
       owner: item.owner.fullName
     }))
   }
@@ -88,7 +92,7 @@ async function findThelastestEvent () {
       susbscribedPeople: event.susbscribedPeople,
       address: event.address,
       maxPeople: event.maxPeople,
-      spaceImage: event.spaceImage,
+      imageOfThePlace: event.imageOfThePlace,
       owner: event.owner.fullName
     }
   }
@@ -109,7 +113,7 @@ async function findById (id) {
       susbscribedPeople: event.susbscribedPeople,
       address: event.address,
       maxPeople: event.maxPeople,
-      spaceImage: event.spaceImage,
+      imageOfThePlace: event.imageOfThePlace,
       owner: event.owner.fullName
     }
   }
@@ -130,7 +134,7 @@ async function searchByTitle (title) {
       susbscribedPeople: item.susbscribedPeople,
       address: item.address,
       maxPeople: item.maxPeople,
-      spaceImage: item.spaceImage,
+      imageOfThePlace: item.imageOfThePlace,
       owner: item.owner.fullName
     }))
   }
@@ -150,7 +154,7 @@ async function findEventsCreatedbyUser (userId) {
       susbscribedPeople: item.susbscribedPeople,
       address: item.address,
       maxPeople: item.maxPeople,
-      spaceImage: item.spaceImage,
+      imageOfThePlace: item.imageOfThePlace,
       owner: item.owner.fullName
     }))
   }
@@ -160,12 +164,16 @@ async function updateEvent (body, id, userId) {
   const { title, description, startsAt, endsAt } = body
   if (!title && !description && !startsAt && !endsAt) throw new Error('Submit at least one field to update the event')
 
+  const { error } = await eventValidator.updateEvent(body)
+  if (error) throw new Error(error.message)
+
+  if (endsAt < startsAt) throw new Error('The end cannot be bigger than the start')
+
   const event = await eventRepository.findEventById(id)
   if (!event) throw new Error('Event not found!')
 
   // eslint-disable-next-line eqeqeq
   if (event.owner._id != userId) throw new Error('You cant update this post')
-
   await eventRepository.updateEvent(event, title, description, startsAt, endsAt)
 
   return { message: 'Post successfully updated!' }
