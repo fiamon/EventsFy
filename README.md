@@ -10,6 +10,7 @@ npm run dev
 
 http://localhost:8080/doc
 
+```
 📁 src
   📂 controllers
     📄 user.controller.js
@@ -29,3 +30,4 @@ http://localhost:8080/doc
   📂 models
     📄 user.model.js
   📄app.js
+```
