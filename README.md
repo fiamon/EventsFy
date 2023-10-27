@@ -16,6 +16,8 @@ npm run dev
 http://localhost:8080/doc
 ```
 
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=EventsFy%20API&uri=https%3A%2F%2Fraw.githubusercontent.com%2Ffiamon%2FEventsFy%2Fmain%2Ftests%2FInsomnia_2023-10-27.json)
+
 ```
 📁 src
   📂 controllers
