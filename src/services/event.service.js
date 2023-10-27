@@ -193,17 +193,21 @@ async function deleteEvent (id, userId) {
 async function addComment (id, userId, comment) {
   if (!comment) throw new Error('Write a message to comment')
 
-  await eventRepository.commentOnAnEvent(id, comment, userId)
+  const userComment = await eventRepository.commentOnAnEvent(id, comment, userId)
+  if (!userComment) throw new Error('error when commenting')
 
-  return { message: 'Comment successfully completed!' }
+  return { message: 'Comment successfully created!' }
 }
 
 async function removeComment (eventId, commentId, userId) {
-  const removedComment = await eventRepository.removeComment(eventId, commentId, userId)
+  const document = await eventRepository.findEventById(eventId)
+  const commentFinder = document.comments.find(comment => comment.commentId === commentId)
 
-  const commentFinder = removedComment.comments.find(comment => comment.commentId === commentId)
   if (!commentFinder) throw new Error('Comment not found!')
   if (commentFinder.user !== userId) throw new Error('You cant delete this comment')
+
+  const removedComment = await eventRepository.removeComment(eventId, commentId, userId)
+  if (!removedComment) throw new Error('Error when trying to delete the comment.')
 
   return { message: 'Comment successfully removed!' }
 }

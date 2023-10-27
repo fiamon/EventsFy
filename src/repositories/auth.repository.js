@@ -1,6 +1,6 @@
 import { User } from '../models/User.js'
 
-function findById (id) {
+async function findById (id) {
   return User.findById({ _id: id })
 }
 

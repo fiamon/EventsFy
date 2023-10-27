@@ -47,7 +47,7 @@ async function updateUser (userId, body) {
   if (user._id != userId) throw new Error('You cant update this user!')
 
   if (password) {
-    password = await bcrypt.hashSync(password, 10)
+    password = bcrypt.hashSync(password, 10)
   }
 
   const updatedUser = await userRepository.updateUser(userId, {

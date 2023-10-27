@@ -1,10 +1,10 @@
 import { Event } from '../models/Event.js'
 
-function createEvent (event) {
+async function createEvent (event) {
   return Event.create(event)
 }
 
-function findAllEvents (limit, offset) {
+async function findAllEvents (limit, offset) {
   return Event
     .find({})
     .populate('owner')
@@ -13,24 +13,24 @@ function findAllEvents (limit, offset) {
     .limit(limit)
 }
 
-function countEvents () {
+async function countEvents () {
   return Event.countDocuments()
 }
 
-function findTheLatestEvent () {
+async function findTheLatestEvent () {
   return Event
     .findOne()
     .sort({ _id: -1 })
     .populate('owner')
 }
 
-function findEventById (id) {
+async function findEventById (id) {
   return Event
     .findById({ _id: id })
     .populate('owner')
 }
 
-function findEventByTitle (title) {
+async function findEventByTitle (title) {
   return Event
     .find({
       title: {
@@ -42,14 +42,14 @@ function findEventByTitle (title) {
     .populate('owner')
 }
 
-function findEventsCreatedByUser (id) {
+async function findEventsCreatedByUser (id) {
   return Event
     .find({ owner: id })
     .populate('owner')
     .sort({ _id: -1 })
 }
 
-function updateEvent (event, title, description, startsAt, endsAt) {
+async function updateEvent (event, title, description, startsAt, endsAt) {
   return Event
     .updateOne(
       event,
@@ -58,11 +58,11 @@ function updateEvent (event, title, description, startsAt, endsAt) {
     )
 }
 
-function deleteEvent (id) {
+async function deleteEvent (id) {
   return Event.findOneAndDelete(id)
 }
 
-function commentOnAnEvent (id, comment, user) {
+async function commentOnAnEvent (id, comment, user) {
   const commentId = Math.floor(Date.now() * Math.random()).toString(36)
 
   return Event
@@ -72,7 +72,7 @@ function commentOnAnEvent (id, comment, user) {
     )
 }
 
-function removeComment (eventId, commentId, user) {
+async function removeComment (eventId, commentId, user) {
   return Event
     .findOneAndUpdate(
       { _id: eventId },
@@ -80,7 +80,7 @@ function removeComment (eventId, commentId, user) {
     )
 }
 
-function subscribeOnAnEvent (id, user) {
+async function subscribeOnAnEvent (id, user) {
   return Event
     .findOneAndUpdate(
       { _id: id },

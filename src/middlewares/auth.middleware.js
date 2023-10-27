@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 import authRepository from '../repositories/auth.repository.js'
 
-export async function authMiddleware (req, res, next) {
+export function authMiddleware (req, res, next) {
   try {
     const { authorization } = req.headers
     if (!authorization) return res.status(401).send({ message: 'The token was not informed!' })
