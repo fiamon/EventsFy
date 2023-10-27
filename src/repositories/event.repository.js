@@ -1,11 +1,11 @@
 import { Event } from '../models/Event.js'
 
-async function createEvent (event) {
-  return await Event.create(event)
+function createEvent (event) {
+  return Event.create(event)
 }
 
-async function findAllEvents (limit, offset) {
-  return await Event
+function findAllEvents (limit, offset) {
+  return Event
     .find({})
     .populate('owner')
     .sort({ _id: -1 })
@@ -13,25 +13,25 @@ async function findAllEvents (limit, offset) {
     .limit(limit)
 }
 
-async function countEvents () {
-  return await Event.countDocuments()
+function countEvents () {
+  return Event.countDocuments()
 }
 
-async function findTheLatestEvent () {
-  return await Event
+function findTheLatestEvent () {
+  return Event
     .findOne()
     .sort({ _id: -1 })
     .populate('owner')
 }
 
-async function findEventById (id) {
-  return await Event
+function findEventById (id) {
+  return Event
     .findById({ _id: id })
     .populate('owner')
 }
 
-async function findEventByTitle (title) {
-  return await Event
+function findEventByTitle (title) {
+  return Event
     .find({
       title: {
         $regex: `${title || ''}`,
@@ -42,15 +42,15 @@ async function findEventByTitle (title) {
     .populate('owner')
 }
 
-async function findEventsCreatedByUser (id) {
-  return await Event
+function findEventsCreatedByUser (id) {
+  return Event
     .find({ owner: id })
     .populate('owner')
     .sort({ _id: -1 })
 }
 
-async function updateEvent (event, title, description, startsAt, endsAt) {
-  return await Event
+function updateEvent (event, title, description, startsAt, endsAt) {
+  return Event
     .updateOne(
       event,
       { title, description, startsAt, endsAt },
@@ -58,30 +58,30 @@ async function updateEvent (event, title, description, startsAt, endsAt) {
     )
 }
 
-async function deleteEvent (id) {
-  return await Event.findOneAndDelete(id)
+function deleteEvent (id) {
+  return Event.findOneAndDelete(id)
 }
 
-async function commentOnAnEvent (id, comment, user) {
+function commentOnAnEvent (id, comment, user) {
   const commentId = Math.floor(Date.now() * Math.random()).toString(36)
 
-  return await Event
+  return Event
     .findOneAndUpdate(
       { _id: id },
       { $push: { comments: { commentId, user, comment, createdAt: new Date() } } }
     )
 }
 
-async function removeComment (eventId, commentId, user) {
-  return await Event
+function removeComment (eventId, commentId, user) {
+  return Event
     .findOneAndUpdate(
       { _id: eventId },
       { $pull: { comments: { commentId, user } } }
     )
 }
 
-async function subscribeOnAnEvent (id, user) {
-  return await Event
+function subscribeOnAnEvent (id, user) {
+  return Event
     .findOneAndUpdate(
       { _id: id },
       { $push: { susbscribedPeople: { user } } }
